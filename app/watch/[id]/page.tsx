@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FiArrowLeft, FiMaximize } from 'react-icons/fi';
-import { useAuth } from '@/context/AuthContext';
 
 interface Movie {
   _id: string;
@@ -20,18 +19,12 @@ export default function WatchPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const params = useParams();
-  const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
     if (params.id) {
       fetchMovie(params.id as string);
     }
-  }, [params.id, user]);
+  }, [params.id]);
 
   const fetchMovie = async (id: string) => {
     try {
